@@ -1,4 +1,4 @@
-from _index import *
+from ._index import *
 
 
 class SchoolScoreLine(db.Model):
@@ -54,7 +54,7 @@ class SchoolScoreLine(db.Model):
     ShengwuD = db.Column(db.Integer)
     Dili = db.Column(db.Float)
     DiliD = db.Column(db.Integer)
-    update_time = db.Column(db.DateTime, default=datetime.now)
-    create_time = db.Column(db.DateTime, default=datetime.now)
+    update_time = db.Column(db.DateTime, default=datetime.datetime)
+    create_time = db.Column(db.DateTime, default=datetime.datetime)
     def __repr__(self):
         return '<SchoolScoreLine %r>' % self.id

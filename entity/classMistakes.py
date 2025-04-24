@@ -1,4 +1,4 @@
-from _index import *
+from ._index import *
 
 class ClassMistakes(db.Model):
     """班级错题

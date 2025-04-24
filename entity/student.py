@@ -1,4 +1,4 @@
-from _index import *
+from ._index import *
 
 class Student(db.Model):
     """学生表->
@@ -23,7 +23,7 @@ class Student(db.Model):
     '''选科表id：[{政史地:0},{物化生:1},{政史生:2}]'''
     subject_selection_id = db.Column(db.Integer)
     state = db.Column(db.Boolean)
-    create_time = db.Column(db.DateTime, default=datetime.now) 
-    update_time =db.Column(db.DateTime, default=datetime.now)
+    create_time = db.Column(db.DateTime, default=datetime.datetime) 
+    update_time =db.Column(db.DateTime, default=datetime.datetime)
     def __repr__(self):
         return '<Student %r>' % self.name

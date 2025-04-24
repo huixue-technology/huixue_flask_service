@@ -1,4 +1,4 @@
-from _index import *
+from ._index import *
 
 
 class Classes(db.Model):
@@ -15,7 +15,7 @@ class Classes(db.Model):
     name = db.Column(db.String(64))
     header_id = db.Column(db.Integer) 
     school_id = db.Column(db.Integer)
-    create_time = db.Column(db.DateTime, default=datetime.now)
-    update_time = db.Column(db.DateTime, default=datetime.now)
+    create_time = db.Column(db.DateTime, default=datetime.datetime)
+    update_time = db.Column(db.DateTime, default=datetime.datetime)
     def __repr__(self):
         return '<Classes %r>' % self.name

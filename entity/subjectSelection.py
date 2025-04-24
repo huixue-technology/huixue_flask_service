@@ -1,4 +1,4 @@
-from _index import *
+from ._index import *
 
 class SubjectSelection(db.Model):
     """选科对应id
@@ -27,10 +27,9 @@ class SubjectSelection(db.Model):
     """
     
     __tablename__ = 'subject_selection'
-    create_time = db.Column(db.DateTime, default=datetime.now)
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64))
-    create_time = db.Column(db.DateTime, default=datetime.now)
-    update_time = db.Column(db.DateTime, default=datetime.now)
+    create_time = db.Column(db.DateTime, default=datetime.datetime)
+    update_time = db.Column(db.DateTime, default=datetime.datetime)
     def __repr__(self):
         return '<SubjectSelection %r>' % self.name

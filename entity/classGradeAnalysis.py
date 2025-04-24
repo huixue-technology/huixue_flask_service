@@ -1,4 +1,4 @@
-from _index import *
+from ._index import *
 
 
 class ClassGradeAnalysis(db.Model):
@@ -32,7 +32,7 @@ class ClassGradeAnalysis(db.Model):
     Wuli = db.Column(db.Integer)
     Huaxue = db.Column(db.Integer)
     Shengwu = db.Column(db.Integer)
-    create_time = db.Column(db.DateTime, default=datetime.now)
-    update_time = db.Column(db.DateTime, default=datetime.now)
+    create_time = db.Column(db.DateTime, default=datetime.datetime)
+    update_time = db.Column(db.DateTime, default=datetime.datetime)
     def __repr__(self):
         return '<ClassGradeAnalysis %r>' % self.name

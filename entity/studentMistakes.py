@@ -1,4 +1,4 @@
-from _index import *
+from ._index import *
 
 
 class StudentMistakes(db.Model):

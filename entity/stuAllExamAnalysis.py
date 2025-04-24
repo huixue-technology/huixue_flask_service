@@ -1,4 +1,4 @@
-from _index import *
+from ._index import *
 
 class StuAllExamAnalysis(db.Model):
     """学生考试进线次数分析（建议导表）
@@ -22,7 +22,7 @@ class StuAllExamAnalysis(db.Model):
     update_time 	更新时间
     """
     __tablename__ = 'stu_all_exam_analysis'
-    id = db.Column(db.Integer, primary_key=True,increment=True)
+    id = db.Column(db.Integer, primary_key=True)
     student_id = db.Column(db.Integer)
     year = db.Column(db.String(64))
     AllExam = db.Column(db.Integer)
@@ -36,7 +36,7 @@ class StuAllExamAnalysis(db.Model):
     Dili = db.Column(db.Integer)
     Huaxue = db.Column(db.Integer)
     Shengwu = db.Column(db.Integer)
-    create_time = db.Column(db.DateTime, default=datetime.now)
-    update_time = db.Column(db.DateTime, default=datetime.now)
+    create_time = db.Column(db.DateTime, default=datetime.datetime)
+    update_time = db.Column(db.DateTime, default=datetime.datetime)
     def __repr__(self):
         return '<StuAllExamAnalysis %r>' % self.id

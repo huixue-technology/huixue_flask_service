@@ -1,4 +1,4 @@
-from _index import *
+from ._index import *
 
 class KeyStuAnalysis(db.Model):
     """学生进线率分析
@@ -18,5 +18,5 @@ class KeyStuAnalysis(db.Model):
     exam_id = db.Column(db.Integer)
     subject = db.Column(db.String(64))
     rate = db.Column(db.Float)
-    update_time = db.Column(db.DateTime, default=datetime.now)
-    create_time = db.Column(db.DateTime, default=datetime.now)
+    update_time = db.Column(db.DateTime, default=datetime.datetime)
+    create_time = db.Column(db.DateTime, default=datetime.datetime)

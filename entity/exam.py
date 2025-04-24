@@ -1,4 +1,4 @@
-from _index import  *
+from ._index import  *
 
 class Exam(db.Model):
     """考试id-名对应表
@@ -13,11 +13,11 @@ class Exam(db.Model):
     """
     
     __tablename__ = 'exam'
-    id = db.Column(db.Integer,unique=True,increment=True,primary_key=True)
+    id = db.Column(db.Integer,unique=True,primary_key=True)
     name = db.Column(db.String(64))
     year = db.Column(db.String(64))
     student_grade = db.Column(db.String(64))
     exam_type = db.Column(db.String(64))
     exam_paper_ids = db.Column(db.String(256))
-    update_time = db.Column(db.DateTime,default=datetime.now)
-    create_time = db.Column(db.DateTime,default=datetime.now)
+    update_time = db.Column(db.DateTime,default=datetime.datetime)
+    create_time = db.Column(db.DateTime,default=datetime.datetime)

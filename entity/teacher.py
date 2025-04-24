@@ -1,4 +1,4 @@
-from _index import *
+from ._index import *
 
 class Teacher(db.Model):
     """老师表->
@@ -17,7 +17,7 @@ class Teacher(db.Model):
     name = db.Column(db.String(64))
     subject = db.Column(db.String(64))
     school_id = db.Column(db.Integer)
-    update_time = db.Column(db.DateTime, default=datetime.now)
-    create_time = db.Column(db.DateTime, default=datetime.now)
+    update_time = db.Column(db.DateTime, default=datetime.datetime)
+    create_time = db.Column(db.DateTime, default=datetime.datetime)
     def __repr__(self):
         return '<Teacher %r>' % self.name

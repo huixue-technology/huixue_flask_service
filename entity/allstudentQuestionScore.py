@@ -1,4 +1,4 @@
-from _index import *
+from ._index import *
 
 
 class AllStudentQuestionScore(db.Model):

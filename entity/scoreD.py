@@ -1,4 +1,4 @@
-from _index import *
+from ._index import *
 
 class ScoreD(db.Model):
     """学生考试成绩表

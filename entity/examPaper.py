@@ -1,4 +1,4 @@
-from _index import *
+from ._index import *
 
 class ExamPaper(db.Model):
     """试卷信息

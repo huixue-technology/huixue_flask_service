@@ -1,4 +1,4 @@
-from _index import *
+from ._index import *
 
 class User(db.Model):
     """用户表：需要绑定角色身份—>
@@ -16,11 +16,11 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64))
     wxid = db.Column(db.String(64), unique=True)
-    role = db.Column(db.String(64),enumerate(['admin','teacher','student','parent']))
+    role = db.Column(db.String(64)) # enumerate(['admin','teacher','student','parent'])
     school_id = db.Column(db.Integer)
     phone = db.Column(db.String(64))
     bind_state = db.Column(db.Boolean, default=False)
-    update_time = db.Column(db.DateTime, default=datetime.now)
-    create_time = db.Column(db.DateTime, default=datetime.now)
+    update_time = db.Column(db.DateTime, default=datetime.datetime)
+    create_time = db.Column(db.DateTime, default=datetime.datetime)
     def __repr__(self):
         return '<User %r>' % self.name
