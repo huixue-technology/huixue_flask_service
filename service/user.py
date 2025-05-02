@@ -10,7 +10,7 @@ def convertUser(data):
         wxid = data.get('wxid'),
         school_id = data.get('school_id'),
         role = data.get('role'),
-        eamil = data.get('email'),
+        email = data.get('email'),
         bind_state = data.get('bind_state') if data.get('bind_state') else False,
         update_time = datetime.now(),
         create_time = datetime.now(),
@@ -31,3 +31,40 @@ def register(data):
     if res:
         return success(str(res))
     return internal_server_error(res)
+
+def deleteUser(data):
+    id = data.get('id')
+    if id == None:
+        return params_not_found('id')
+    res = del_user(id)
+    if res == True:
+        return success("删除用户成功！")
+    return internal_server_error(res)
+
+def updateUser(data):
+    user = convertUser(data)
+    res = update_user(user)
+    if res == True:
+        return success("修改用户成功！")
+    return internal_server_error(res)
+
+def getUser(filter,page,size):
+    res = get_user(filter,page,size)
+    if isinstance(res, Exception):
+        return internal_server_error(res)
+    elif res == None:
+        return params_not_found()
+    print(res)
+    r = json.dumps(res)
+    return success(r)
+def bind_status(data):
+    bind_id = data.get('bind_id')
+    if bind_id == None:
+        return params_not_found('bind_id')
+    user_id = data.get('id')
+    res = update_user(User(id=user_id,bind_state=bind_id))
+    if isinstance(res, Exception):
+        return internal_server_error(res)
+    elif res == None:
+        return params_not_found(data)
+    return success()

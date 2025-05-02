@@ -1,133 +1,103 @@
-from flask import Blueprint, request, json
+from flask import  request
 from service.user import *
 from ._index import *
 
-user_route = Blueprint('auth', __name__)
+user_ns = Namespace('用户模块', description='用户相关操作')
 
-@user_route.route('/login', methods=['POST'])
-# @swagger
-def login_():
-    """
-    用户登录
-    ---
-    tags:
-        - 用户管理
-    summary: 用户登录接口
-    description: 通过邮箱和密码进行用户登录
-    parameters:
-        - in: body
-          name: body
-          required: true
-          description: 用户登录信息
-          schema:
-            type: object
-            properties:
-              email:
-                type: string
-                description: 用户邮箱
-              password:
-                type: string
-                description: 用户密码
-            example:
-              email: example@example.com
-              password: password123
-    responses:
-        200:
-            description: 登录成功
-            schema:
-                type: object
-                properties:
-                    message:
-                        type: string
-                        description: 成功信息
-                    token:
-                        type: string
-                        description: 用户认证令牌
-    """
-    data = request.json.get('data')
-    if not data or not data['email'] or not data['password']:
-        return not_found()
-    return login(email=data['email'], password=data['password'])
+login_request = user_ns.model('登录', {
+    'email': fields.String(required=True, description='用户邮箱'),
+    'password': fields.String(required=True, description='用户密码')
+})
 
-@user_route.route('/bind_status')
-# @swagger
-def bind_status_():
-    """
-    身份绑定
-    ---
-    tags:
-        - 用户管理
-    summary: 获取身份绑定状态
-    description: 获取当前用户的身份绑定状态
-    responses:
-        200:
-            description: 返回身份绑定状态
-            schema:
-                type: string
-    """
-    return 'bind_status'
+bind_request = user_ns.model('绑定', {
+    'bind_id': fields.String(required=True, description='绑定id'),
+    'id': fields.String(required=True, description='用户id')
+})
 
-@user_route.route('/register', methods=['POST'])
-# @swagger
-def register_():
-    """
-    用户注册
-    ---
-    tags:
-        - 用户管理
-    summary: 用户注册接口
-    description: 通过邮箱和密码进行用户注册
-    parameters:
-        - in: body
-          name: body
-          required: true
-          description: 用户注册信息
-          schema:
-            type: object
-            properties:
-              email:
-                type: string
-                description: 用户邮箱
-              password:
-                type: string
-                description: 用户密码
-            example:
-              email: example@example.com
-              password: password123
-    responses:
-        200:
-            description: 注册成功
-            schema:
-                type: object
-                properties:
-                    message:
-                        type: string
-                        description: 成功信息
-    """
-    data = request.json['data']
-    print(data.get('email'))
-    if not data:
-        return params_error()
-    elif not data.get('email'):
-        return params_not_found('email')
-    elif not data.get('password'):
-        return params_not_found('password')
-    return register(data)
+register_request = user_ns.model('注册', {
+    'name': fields.String(required=True, description='用户名'),
+    'wxid': fields.String(required=False, description='微信id'),
+    'role': fields.String(required=False, description='角色'),
+    'school_id': fields.String(required=False, description='学校id'),
+    'phone': fields.String(required=False, description='手机号'),
+    'email': fields.String(required=True, description='邮箱'),
+    'password': fields.String(required=True, description='密码'),
+    'bind_state': fields.Boolean(required=False, description='绑定状态')
+})
 
-@user_route.route('/modify_user')
-# @swagger
-def modify_user_():
-    """
-    修改用户信息
-    ---
-    tags:
-        - 用户管理
-    summary: 修改用户信息接口
-    description: 修改当前用户的信息
-    responses:
-        200:
-            description: 修改成功
-            schema:
-                type: string
-    """
-    return 'modify_user'
+modify_request = user_ns.model('修改', {
+    'name': fields.String(required=False, description='用户名'),
+    'wxid': fields.String(required=False, description='微信id'),
+    'role': fields.String(required=False, description='角色'),
+    'school_id': fields.String(required=False, description='学校id'),
+    'phone': fields.String(required=False, description='手机号'),
+    'email': fields.String(required=False, description='邮箱'),
+    'password': fields.String(required=False, description='密码'),
+    'bind_state': fields.Boolean(required=False, description='绑定状态')
+})
+
+delete_request = user_ns.model('删除', {
+    'id': fields.String(required=True, description='用户id')
+})
+
+get_request = user_ns.parser()
+get_request.add_argument('filter',type=str,required=False,help='查询条件')
+get_request.add_argument('page',type=int,required=False,help='页码')
+get_request.add_argument('size',type=int,required=False,help='每页数量')
+
+@user_ns.route('/login')
+class Login(Resource):
+    @user_ns.expect(login_request)
+    def post(self):
+        data = request.json.get('data')
+        if not data or not data['email'] or not data['password']:
+            return not_found()
+        return login(email=data['email'], password=data['password'])
+
+
+
+@user_ns.route('/bind_status')
+class BindStatus(Resource):
+    @user_ns.expect(bind_request)
+    def post(self):
+        '''用户绑定身份'''
+        data = request.json
+        return bind_status(data)
+
+
+@user_ns.route('/user')
+class User(Resource):
+    @user_ns.expect(register_request)
+    def post(self):
+        '''用户注册'''
+        data = request.json
+        if not data.get('email'):
+            return params_not_found('email')
+        elif not data.get('password'):
+            return params_not_found('password')
+        return register(data)
+    @user_ns.expect(modify_request)
+    def put(self):
+        '''修改用户'''
+        data = request.json
+        if not data:
+            return params_error()
+        return updateUser(data)
+    @user_ns.expect(delete_request)
+    def delete(self):
+        '''删除用户'''
+        data = request.json
+        if not data:
+            return params_error()
+        return deleteUser(data)
+    @user_ns.expect(get_request)
+    def get(self):
+        '''查询用户(支持过滤条件)'''
+        try:
+            filter_str = request.args.get('filter')  # 获取字符串形式的 JSON
+            f = json.loads(filter_str) if filter_str else None
+            p = request.args.get('page')
+            s = request.args.get('size')
+        except Exception as e:
+            return params_error()
+        return getUser(f,p,s)

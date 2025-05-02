@@ -20,9 +20,13 @@ def del_user(user:User):
 def get_user(filter:dict,page:int = None,size:int = None):
     try:
         res = User.query
-        res = res.filter_by(**filter) # 动态传递过滤条件
+        if filter != None:
+            res = res.filter_by(**filter) # 动态传递过滤条件
         res = res.paginate(page=page,per_page=size).items
-        return res
+        r = []
+        for i in res: # 遍历结果
+            r.append(i.to_dict())
+        return r
     except Exception as e:
         return e
     

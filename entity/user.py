@@ -28,3 +28,16 @@ class User(db.Model):
     create_time = db.Column(db.DateTime, default=datetime.datetime)
     def __repr__(self):
         return '<User %r>' % self.name
+    def to_dict(self):
+        return {
+            'name': self.name,
+            'phone': self.phone,
+            'password': self.password,  # 注意：通常不会将密码包含在返回结果中
+            'wxid': self.wxid,
+            'school_id': self.school_id,
+            'role': self.role,
+            'email': self.email,
+            'bind_state': self.bind_state,
+            'update_time': self.update_time.isoformat() if self.update_time else None,
+            'create_time': self.create_time.isoformat() if self.create_time else None,
+        }

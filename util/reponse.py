@@ -14,10 +14,11 @@ def bad_request():
 
 def params_error():
     return json.dumps({"code": 400, "msg": "params error"})
-
+def file_error():
+    return json.dumps({"code": 400, "msg": "file error"})
 def params_not_found(e):
     return json.dumps({"code": 400, "msg": "params not found","detail":str(e) if e else None})
-def success(data:str):
+def success(data):
     return json.dumps({"code": 200, "msg": "success","data":data if data else None})
 def token_expired():
     return json.dumps({"code": 401, "msg": "token expired"})
