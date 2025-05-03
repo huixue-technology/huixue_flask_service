@@ -2,7 +2,7 @@
 from service.upload import *
 from ._index import *
 from werkzeug.datastructures import FileStorage
-up_ns = Namespace('上传模块', description='上传相关操作')
+up_ns = Namespace('upload', description='上传相关操作')
 
 upload_parser = up_ns.parser()
 upload_parser.add_argument(
@@ -32,7 +32,7 @@ def delete_handle():
     file_path = file_path.split('uploads/')[-1]
     return delete(file_path)
 
-@up_ns.route('/upload')
+@up_ns.route('')
 class Upload(Resource):
     
     @up_ns.expect(upload_parser)

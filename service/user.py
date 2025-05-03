@@ -52,11 +52,9 @@ def getUser(filter,page,size):
     res = get_user(filter,page,size)
     if isinstance(res, Exception):
         return internal_server_error(res)
-    elif res == None:
-        return params_not_found()
-    print(res)
     r = json.dumps(res)
     return success(r)
+
 def bind_status(data):
     bind_id = data.get('bind_id')
     if bind_id == None:

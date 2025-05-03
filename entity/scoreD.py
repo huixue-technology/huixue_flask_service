@@ -24,3 +24,16 @@ class ScoreD(db.Model):
     sumB = db.Column(db.Integer)
     sumD = db.Column(db.Integer)
     show = db.Column(db.Boolean)
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'student_id': self.student_id,
+            'school_id': self.school_id,
+            'exam_id': self.exam_id,
+            'class_id': self.class_id,
+            'sum_': self.sum_,
+            'sumB': self.sumB,
+            'sumD': self.sumD,
+            'show': self.show
+        }

@@ -2,7 +2,7 @@ from flask import  request
 from service.user import *
 from ._index import *
 
-user_ns = Namespace('用户模块', description='用户相关操作')
+user_ns = Namespace('user', description='用户相关操作')
 
 login_request = user_ns.model('登录', {
     'email': fields.String(required=True, description='用户邮箱'),
@@ -65,7 +65,7 @@ class BindStatus(Resource):
         return bind_status(data)
 
 
-@user_ns.route('/user')
+@user_ns.route('')
 class User(Resource):
     @user_ns.expect(register_request)
     def post(self):

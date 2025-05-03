@@ -1,4 +1,4 @@
-import json
+from ._index import *
 
 def not_found():
     return json.dumps({"code": 404, "msg": "not found"})
